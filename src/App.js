@@ -1,35 +1,27 @@
-import { createElement, useState } from "react";
-import "./tailwind.css";
-import Button from "./components/Button";
-import Tab from "./components/Tab";
+import { forwardRef, useRef } from "react";
+/* import Button from "./components/Button";
+import Tab from "./components/Tab"; */
+/* import Test from "./components/Test"; */
+
+function Input(props, ref) {
+  return <input ref={ref} type="text" {...props} />;
+}
+
+Input = forwardRef(Input);
 
 function App() {
-  const todos = ["todo1", "todo2", "todo3"];
-  const [activeTab, setActiveTab] = useState(1);
-  /* const h1 = createElement("h1", null, "Hello World");
-  const ul = createElement(
-    "ul",
-    null,
-    todos.map((todo) => createElement("li", null, todo))
-  );
+  /* const todos = ["todo1", "todo2", "todo3"];
+  const [activeTab, setActiveTab] = useState(1); */
+  /* const [show, setShow] = useState(false); */
 
-  return createElement(
-    "main",
-    {
-      className: "test",
-      id: "main",
-    },
-    h1,
-    ul
-  ); */
-
-  /* const searchFunction = () => {
-    alert("Arama Yapıldı");
-  }; */
+  const inputRef = useRef();
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
 
   return (
     <>
-      <div style={{ padding: 20 }}>
+      {/* <div style={{ padding: 20 }}>
         <button onClick={() => setActiveTab(2)}>Aktif Tabı Değiştir</button>
         <Tab activeTab={activeTab} setActiveTab={setActiveTab}>
           <Tab.Panel title="Profil">Tab 1 İçeriği</Tab.Panel>
@@ -55,7 +47,16 @@ function App() {
         {todos.map((todo, index) => (
           <li key={index}>{todo}</li>
         ))}
-      </ul>
+      </ul> */}
+
+      {/* <button onClick={() => setShow((show) => !show)}>
+        {show ? "Gizle" : "Göster"}
+      </button>
+      {show && <Test />} */}
+
+      <h1>useRef() - forwardRef()</h1>
+      <Input ref={inputRef} />
+      <button onClick={focusInput}>Focusla</button>
     </>
   );
 }
