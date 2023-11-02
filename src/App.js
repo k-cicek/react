@@ -1,22 +1,32 @@
-import { forwardRef, useRef } from "react";
-/* import Button from "./components/Button";
+/* import { forwardRef, useRef } from "react";
+ */ /* import Button from "./components/Button";
 import Tab from "./components/Tab"; */
 /* import Test from "./components/Test"; */
+import { useState } from "react";
 
-function Input(props, ref) {
+/* function Input(props, ref) {
   return <input ref={ref} type="text" {...props} />;
 }
-
-Input = forwardRef(Input);
-
+ */
+/* Input = forwardRef(Input);
+ */
 function App() {
   /* const todos = ["todo1", "todo2", "todo3"];
   const [activeTab, setActiveTab] = useState(1); */
   /* const [show, setShow] = useState(false); */
 
-  const inputRef = useRef();
+  /* const inputRef = useRef();
   const focusInput = () => {
     inputRef.current.focus();
+  }; */
+
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState();
+
+  const submitHandle = (e) => {
+    e.preventDefault();
+    setTodos([...todos, todo]);
+    setTodo("");
   };
 
   return (
@@ -54,9 +64,26 @@ function App() {
       </button>
       {show && <Test />} */}
 
-      <h1>useRef() - forwardRef()</h1>
+      {/* <h1>useRef() - forwardRef()</h1>
       <Input ref={inputRef} />
-      <button onClick={focusInput}>Focusla</button>
+      <button onClick={focusInput}>Focusla</button> */}
+
+      <h1>useReducer()</h1>
+      <form onSubmit={submitHandle}>
+        <input
+          type="text"
+          value={todo}
+          onChange={(e) => setTodo(e.target.value)}
+        />
+        <button disabled={!todo} type="submit">
+          Ekle
+        </button>
+      </form>
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
     </>
   );
 }
