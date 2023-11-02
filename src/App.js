@@ -1,89 +1,167 @@
-/* import { forwardRef, useRef } from "react";
- */ /* import Button from "./components/Button";
-import Tab from "./components/Tab"; */
-/* import Test from "./components/Test"; */
 import { useState } from "react";
 
-/* function Input(props, ref) {
-  return <input ref={ref} type="text" {...props} />;
-}
- */
-/* Input = forwardRef(Input);
- */
 function App() {
-  /* const todos = ["todo1", "todo2", "todo3"];
-  const [activeTab, setActiveTab] = useState(1); */
-  /* const [show, setShow] = useState(false); */
+  const genders = [
+    {
+      key: "1",
+      value: "Erkek",
+    },
+    {
+      key: "2",
+      value: "Kadın",
+    },
+  ];
 
-  /* const inputRef = useRef();
-  const focusInput = () => {
-    inputRef.current.focus();
-  }; */
+  const categoryList = [
+    {
+      key: 1,
+      value: "PHP",
+    },
+    {
+      key: 2,
+      value: "Javascript",
+    },
+    {
+      key: 3,
+      value: "CSS",
+    },
+    {
+      key: 4,
+      value: "HTML",
+    },
+  ];
+  const [name, setName] = useState("Kevser");
+  const [description, setDescription] = useState("");
+  const [gender, setGender] = useState("");
+  const [categories, setCategories] = useState([2, 4]);
+  const [rule, setRule] = useState(true);
+  const [rules, setRules] = useState([
+    {
+      key: 1,
+      value: "1. kuralı kabul ediyorum",
+      checked: false,
+    },
+    {
+      key: 2,
+      value: "2. kuralı kabul ediyorum",
+      checked: false,
+    },
+    {
+      key: 3,
+      value: "3. kuralı kabul ediyorum",
+      checked: true,
+    },
+  ]);
 
-  const [todos, setTodos] = useState([]);
-  const [todo, setTodo] = useState();
+  const levels = [
+    { key: "beginner", value: "Başlangıç" },
+    { key: "Jr_Developer", value: "Jr. Developer" },
+    { key: "Sr_Developer", value: "Sr. Developer" },
+  ];
 
-  const submitHandle = (e) => {
-    e.preventDefault();
-    setTodos([...todos, todo]);
-    setTodo("");
+  const checkRule = (key, checked) => {
+    setRules((rules) =>
+      rules.map((rule) => {
+        if (key === rule.key) {
+          rule.checked = checked;
+        }
+        return rule;
+      })
+    );
   };
+
+  const [level, setLevel] = useState("Jr_Developer");
+  const selectedGender = genders.find((g) => g.key === gender);
+  const selectedLevel = levels.find((g) => g.key === level);
+  const selectedCategories =
+    categories && categoryList.filter((c) => categories.includes(c.key));
+
+  const enabled = rules.every((r) => r.checked);
 
   return (
     <>
-      {/* <div style={{ padding: 20 }}>
-        <button onClick={() => setActiveTab(2)}>Aktif Tabı Değiştir</button>
-        <Tab activeTab={activeTab} setActiveTab={setActiveTab}>
-          <Tab.Panel title="Profil">Tab 1 İçeriği</Tab.Panel>
-          <Tab.Panel title="Hakkında">Tab 2 İçeriği</Tab.Panel>
-          <Tab.Panel title="Ayarlar">Tab 3 İçeriği</Tab.Panel>
-        </Tab>
-      </div>
-
-      <div style={{ padding: 20 }}>
-        <Button text="Buton Örneği" />
-        <Button text="Buton Örneği" variant="success" />
-        <Button text="Buton Örneği" variant="danger" />
-        <Button text="Buton Örneği" variant="warning" />
-      </div>
-      <h1 tabIndex={3} style={{ color: "red", backgroundColor: "yellow" }}>
-        Kevso
-      </h1>
-      <label htmlFor="search" tabIndex={2} onClick={() => alert("Hello")}>
-        Arama
-      </label>
-      <input type="text" id="search" tabIndex={1} />
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
+      <button onClick={() => setName("Ahmet")}>Adı Değiştir</button>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <br />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      ></textarea>
+      <br />
+      <select value={gender} onChange={(e) => setGender(e.target.value)}>
+        <option value="">Seçin</option>
+        {genders.map((gender) => (
+          <option value={gender.key} key={gender.key}>
+            {gender.value}
+          </option>
         ))}
-      </ul> */}
+      </select>
+      <br />
 
-      {/* <button onClick={() => setShow((show) => !show)}>
-        {show ? "Gizle" : "Göster"}
-      </button>
-      {show && <Test />} */}
+      <button onClick={() => setCategories([2, 3, 4])}>Kategorileri Seç</button>
+      <select
+        value={categories}
+        multiple={true}
+        onChange={(e) =>
+          setCategories(
+            [...e.target.selectedOptions].map((o) => parseInt(o.value))
+          )
+        }
+      >
+        <option value="">Seçin</option>
+        {categoryList.map((category) => (
+          <option value={category.key} key={category.key}>
+            {category.value}
+          </option>
+        ))}
+      </select>
 
-      {/* <h1>useRef() - forwardRef()</h1>
-      <Input ref={inputRef} />
-      <button onClick={focusInput}>Focusla</button> */}
+      <pre>{JSON.stringify(selectedCategories, null, 2)}</pre>
 
-      <h1>useReducer()</h1>
-      <form onSubmit={submitHandle}>
+      <br />
+
+      <label>
         <input
-          type="text"
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
+          type="checkbox"
+          checked={rule}
+          onChange={(e) => setRule(e.target.checked)}
         />
-        <button disabled={!todo} type="submit">
-          Ekle
-        </button>
-      </form>
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
-        ))}
-      </ul>
+        Kuralları kabul ediyorum
+      </label>
+      <br />
+
+      {rules.map((rule) => (
+        <label key={rule.key}>
+          <input
+            type="checkbox"
+            checked={rule.checked}
+            onChange={(e) => checkRule(rule.key, e.target.checked)}
+          />
+          {rule.value}
+        </label>
+      ))}
+      <br />
+      <pre>{JSON.stringify(rules, null, 2)}</pre>
+      <br />
+
+      {levels.map((l, index) => (
+        <label key={index}>
+          <input
+            type="radio"
+            value={l.key}
+            checked={l.key === level}
+            onChange={(e) => setLevel(e.target.value)}
+          />
+          {l.value}
+        </label>
+      ))}
+      <br />
+      {JSON.stringify(selectedLevel)}
+      <button disabled={!enabled}>Devam et</button>
     </>
   );
 }
